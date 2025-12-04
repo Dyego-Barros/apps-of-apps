@@ -8,17 +8,8 @@ spec:
   source:
     repoURL: "https://metallb.github.io/metallb"
     chart: metallb
-    targetRevision: "0.13.0"   
-    chart: metallb
-    helm:
-      values: |     
-        configInline:   
-          address-pools:
-            - name: default
-              protocol: layer2
-              addresses:
-                 - 172.20.255.200-172.20.255.250
-    
+    targetRevision: "0.15.2"   
+    chart: metallb  
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system
@@ -26,3 +17,17 @@ spec:
     automated:
       prune: true
       selfHeal: true
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: first-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.20.0.30-172.20.0.40
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: example
+  namespace: metallb-system
