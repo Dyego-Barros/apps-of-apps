@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: "https://github.com/metallb/metallb"
     targetRevision: "v0.15.2"    # ajustar se quiser outra versão
-    path: "config/default"
+    path: "manifests"
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system
