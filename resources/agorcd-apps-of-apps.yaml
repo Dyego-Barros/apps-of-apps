@@ -1,0 +1,17 @@
+apiVersion: agroproject.io/v1alpha1
+kind: Application
+metadata:
+  name: agorcd-apps-of-apps
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Dyego-Barros/apps-of-apps.git
+    targetRevision: HEAD
+    path: apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: agorcd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

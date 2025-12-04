@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/metallb/metallb"
+    targetRevision: "v0.14.12"    # ajustar se quiser outra versão
+    path: "config/default"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# IPAddressPool + L2Advertisement (aplicar após controller)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metallb-local-config
+  namespace: metallb-system
+data:
+  ip-address-pool: |
+    apiVersion: metallb.io/v1beta1
+    kind: IPAddressPool
+    metadata:
+      name: kind-pool
+      namespace: metallb-system
+    spec:
+      addresses:
+        - 172.20.255.200-172.20.255.250
+  l2-advert: |
+    apiVersion: metallb.io/v1beta1
+    kind: L2Advertisement
+    metadata:
+      name: default
+      namespace: metallb-system
+    spec: {}
+---
+# We will apply the actual IPAddressPool and L2Advertisement via ManifestWork below
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-config
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Dyego-Barros/apps-of-apps.git
+    targetRevision: main
+    path: apps/metallb-config
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

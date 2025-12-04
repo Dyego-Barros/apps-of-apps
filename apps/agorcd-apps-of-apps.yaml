@@ -1,7 +1,0 @@
-apiVersion: agroproject.io/v1alpha1
-kind: Application
-metadata:
-  name: agorcd-apps-of-apps
-spec:
-  project: default
-  sourcee:
