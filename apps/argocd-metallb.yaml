@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: "https://github.com/metallb/metallb"
-    targetRevision: "v0.14.15"    # ajustar se quiser outra versão
+    targetRevision: "v0.15.2"    # ajustar se quiser outra versão
     path: "config/default"
   destination:
     server: https://kubernetes.default.svc
