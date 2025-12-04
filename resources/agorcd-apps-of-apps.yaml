@@ -1,12 +1,13 @@
-apiVersion: agroproject.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: agorcd-apps-of-apps
+  namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Dyego-Barros/apps-of-apps.git
-    targetRevision: HEAD
+    targetRevision: main
     path: apps
   destination:
     server: https://kubernetes.default.svc
