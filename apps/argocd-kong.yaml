@@ -25,7 +25,8 @@ spec:
           enabled: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: kong
+    namespace: kong-ingress
+    createNamespace: true   
   syncPolicy:
     automated:
       prune: true
