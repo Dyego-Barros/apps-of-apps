@@ -11,8 +11,7 @@ spec:
     targetRevision: "0.15.2"   
     chart: metallb
     helm:
-      values: |
-        configInline:
+      values: |        
           address-pools:
             - name: default
               protocol: layer2
