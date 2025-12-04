@@ -6,9 +6,17 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/metallb/metallb"
-    targetRevision: "v0.15.2"    # ajustar se quiser outra versão
-    path: "manifests"
+    repoURL: "https://github.com/metallb
+    chart: metallb
+    targetRevision: "0.15.2"
+    helm:
+      values: |
+        configInline:
+          address-pools:
+          - name: default
+            protocol: layer2
+            addresses:
+            - 172.20.255.200-172.20.255.250
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system
