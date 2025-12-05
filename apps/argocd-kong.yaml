@@ -8,16 +8,16 @@ spec:
   source:
     repoURL: "https://charts.konghq.com"
     chart: kong
-    targetRevision: "2.13.1"     # ajustar se quiser outra versão
+    targetRevision: "2.13.1"
     helm:
       values: |
         proxy:
-          type: LoadBalancer
+          type: NodePort
           http:
-            servicePort: 80
+            nodePort: 30000
             containerPort: 8000
           tls:
-            servicePort: 443
+            nodePort: 30443
             containerPort: 8443
         admin:
           enabled: false
@@ -26,7 +26,6 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: kong
-    
   syncPolicy:
     automated:
       prune: true
