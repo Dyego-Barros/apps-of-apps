@@ -12,16 +12,13 @@ spec:
     helm:
       values: |
         proxy:
-          type: NodePort
+          type: LoadBalancer
           http:
             servicePort: 80
             containerPort: 8000
-            nodePort: 30000
           tls:
             servicePort: 443
             containerPort: 8443
-            nodePort: 8443
-            
         admin:
           enabled: false
         ingressController:
