@@ -15,7 +15,7 @@ spec:
           type: LoadBalancer
           http:
             servicePort: 80
-            containerPort: 8000
+            containerPort: 3000
           tls:
             servicePort: 443
             containerPort: 8443
