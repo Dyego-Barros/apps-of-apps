@@ -3,10 +3,9 @@ kind: Ingress
 metadata:
   name: grafana
   namespace: monitoring
-  annotations:
-    kong.ingress.kubernetes.io/strip-path: "true"
+  
 spec:
-  ingressClassName: kong
+  
   rules:
   - host: grafana.local
     http:
