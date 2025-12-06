@@ -1,41 +1,44 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: prometheus-simple
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: "https://prometheus-community.github.io/helm-charts"
-    chart: kube-prometheus-stack
-    targetRevision: "58.3.0"  # ajustar se quiser outra versão
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: prometheus
+    targetRevision: "25.28.0"
     helm:
       values: |
-        grafana:
-          enabled: false
-
         alertmanager:
           enabled: false
 
-        prometheus:
-          prometheusSpec:
-            enableAdminAPI: false
-            retention: 24h
-            serviceMonitorSelectorNilUsesHelmValues: false
+        pushgateway:
+          enabled: false
+
+        server:
+          retention: "12h"
+          persistentVolume:
+            enabled: false
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
 
         kubeStateMetrics:
           enabled: true
 
         nodeExporter:
           enabled: true
+
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-    
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
-    - ServerSideApply=true
+      - CreateNamespace=true
