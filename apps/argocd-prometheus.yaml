@@ -13,9 +13,21 @@ spec:
       values: |
         grafana:
           enabled: false
+
+        alertmanager:
+          enabled: false
+
         prometheus:
           prometheusSpec:
+            enableAdminAPI: false
+            retention: 24h
             serviceMonitorSelectorNilUsesHelmValues: false
+
+        kubeStateMetrics:
+          enabled: true
+
+        nodeExporter:
+          enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -24,3 +36,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
