@@ -15,6 +15,17 @@ spec:
         adminPassword: admin
         service:
           type: LoadBalancer
+
+        persistence:
+          enabled: true
+          type: pvc
+          size: 3Gi
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: standard
+          finalizers:
+            - kubernetes.io/pvc-protection
+
 # To use LoadBalancer instead (MetalLB):
 #        service:
 #          type: LoadBalancer
