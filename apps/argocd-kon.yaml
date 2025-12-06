@@ -25,7 +25,7 @@ spec:
 
         admin:
           enabled: true
-          type: ClusterIP
+          type: LoadBalancer
           http:
             enabled: true
 
