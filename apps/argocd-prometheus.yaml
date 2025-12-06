@@ -18,6 +18,8 @@ spec:
           enabled: false
 
         server:
+          service:
+            type: LoadBalancer
           retention: "12h"
           persistentVolume:
             enabled: false
