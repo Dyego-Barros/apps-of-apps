@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong-gateway
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: "https://charts.konghq.com"
+    chart: kong
+    targetRevision: "2.36.0"
+    helm:
+      values: |
+        ingressController:
+          enabled: true
+
+        proxy:
+          type: LoadBalancer
+          http:
+            enabled: true
+            servicePort: 80
+          tls:
+            enabled: false
+
+        admin:
+          enabled: true
+          type: ClusterIP
+          http:
+            enabled: true
+
+        env:
+          database: "off"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kong
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
